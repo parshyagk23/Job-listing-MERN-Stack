@@ -1,26 +1,32 @@
-require('dotenv').config()
-const express = require('express')
-const mongoose = require('mongoose')
-const app = express()
+require("dotenv").config();
+const express = require("express");
+const mongoose = require("mongoose");
+const authRoute = require("./Routes/auth");
+const app = express();
 
+app.use(express.json());
 
-const port = process.env.PORT
-const mongoDbURl = process.env.MONGODBURL
+const port = process.env.PORT;
+const mongoDbURl = process.env.MONGODBURL;
 
+app.get("/", (req, res) => {
+    res.json({ message: "Home" });
+});
+app.get("/api/health", (req, res) => {
+    res.json({
+        message: "Health",
+        status: "Active",
+        time: new Date(),
+    });
+});
 
-app.get('/',(req, res)=>{
-    res.json({message:'Home'})
-})
-app.get('/api/health',(req, res)=>{
-    res.json({message:'Health'})
-})
+app.use("/api/v1/auth", authRoute);
 
-app.listen(port ,()=>{
+app.listen(port, () => {
     try {
-        mongoose.connect(mongoDbURl)
-        console.log(`server is up at ${port} and DB Connected `)
-        
+        mongoose.connect(mongoDbURl);
+        console.log(`server is up at ${port} and DB Connected `);
     } catch (error) {
-        console.log(error)
+        console.log(error);
     }
-})
+});
