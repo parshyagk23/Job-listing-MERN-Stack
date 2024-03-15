@@ -49,4 +49,24 @@ const createJob = async (req, res) => {
     }
 }
 
-module.exports = {createJob}
+const getJobDetails = async (req ,res)=>{
+
+    try {
+        const { jobId } = req.params
+
+        const JobDetails = await Job.findById(jobId)
+        if(!JobDetails){
+            return res.status(400).json({
+                errormessage: 'Bad request'
+            })
+        }
+        res.json({data:JobDetails})
+        
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({ errormessage: 'Something went wrong!' })
+        
+    }
+}
+
+module.exports = {createJob , getJobDetails}

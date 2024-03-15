@@ -4,6 +4,6 @@ const JobController = require('../Controller/Job')
 const verifyToken = require('../Middlewares/VerifyToken')
 
 router.post('/create',verifyToken, JobController.createJob )
-// router.get('/job-details/:jobId', )
+router.get('/job-details/:jobId', JobController.getJobDetails )
 
 module.exports = router
