@@ -25,6 +25,15 @@ app.get("/api/health", (req, res) => {
 app.use("/api/v1/auth", authRoute);
 app.use("/api/v1/job", JobRoute);
 
+app.use('*',(req,res)=>{
+    
+    res.status(404).json({errormessage:'Route not found!'})
+})
+app.use((error,req,res,next )=>{
+    console.log(error)
+    res.status(500).json({errormessage:'Something went wrong!'})
+})
+
 app.listen(port, () => {
     try {
         mongoose.connect(mongoDbUrl);

@@ -2,7 +2,7 @@ const User = require('../Models/User')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 
-const registerUser = async (req, res) => {
+const registerUser = async (req, res, next) => {
     try {
         const { name, email, password, mobile } = req.body
         if (!name || !email || !password || !mobile) {
@@ -29,12 +29,11 @@ const registerUser = async (req, res) => {
         res.json({ message: "User register successfully" })
 
     } catch (error) {
-        console.log(error)
-        res.status(500).json({ errormessage: 'Something went wrong!' })
+        next(error)
     }
 }
 
-const userLogin = async (req, res) => {
+const userLogin = async (req, res, next) => {
     try {
         const { email, password } = req.body
         if (!email || !password) {
@@ -72,8 +71,7 @@ const userLogin = async (req, res) => {
 
 
     } catch (error) {
-        console.log(error)
-        res.status(500).json({ errormessage: 'Something went wrong' })
+        next(error)
     }
 }
 
