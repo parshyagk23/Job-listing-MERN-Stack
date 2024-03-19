@@ -131,10 +131,22 @@ const updateJob = async (req, res, next) => {
 const getAllJobs = async (req ,res, next)=>{
 
     try {
-        const  CompanyName= req.query.title || "";
+        const  JobPosition= req.query.title || "";
+        const  Skills= req.query.skills || "";
+        let filteredSkills;
+        let filter ={}
+        if(Skills){
+            filteredSkills= Skills.split(",");
+            const caseInsensitiveFilteredSkills= filteredSkills.map((element)=> new RegExp(element,"i"))
+
+            filter ={Skills: {$in:caseInsensitiveFilteredSkills}}
+        }
+        
         const jobList = await Job.find(
-            { CompanyName: { $regex: CompanyName, $options: "i" } },
-            {  }
+            { JobPosition: { $regex: JobPosition, $options: "i" },
+                ...filter,
+            },
+            {}
         );
         
         res.json({ data: jobList });
