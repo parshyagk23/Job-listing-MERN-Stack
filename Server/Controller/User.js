@@ -65,7 +65,8 @@ const userLogin = async (req, res, next) => {
         res.json(
             { message: 'User Login SuccessFully',
               token,
-              name:UserDetails.name  
+              name:UserDetails.name  ,
+              userId:UserDetails._id
             }
             )
 
@@ -75,4 +76,23 @@ const userLogin = async (req, res, next) => {
     }
 }
 
-module.exports = { registerUser, userLogin }
+const getUserDetails = async(req,res, next)=>{
+    try {
+        const {id} =req.params
+
+        const UserDetails = await User.find({_id:id})
+
+        if(!UserDetails){
+            return res.status(400).json({
+                errormessage: 'Bad request'
+            })
+        }
+
+        res.json({data:UserDetails})
+
+    } catch (error) {
+        next(error)
+    }
+}
+
+module.exports = { registerUser, userLogin, getUserDetails }

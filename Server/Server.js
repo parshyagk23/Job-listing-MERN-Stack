@@ -1,12 +1,14 @@
 require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
+const cors = require('cors')
 
 const authRoute = require("./Routes/auth");
 const JobRoute = require("./Routes/Job");
 const app = express();
 
 app.use(express.json());
+app.use(cors())
 
 const port = process.env.PORT;
 const mongoDbUrl = process.env.MONGODB_URL;

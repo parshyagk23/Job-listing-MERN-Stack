@@ -1,4 +1,6 @@
 const Job = require('../Models/Job')
+const { decodeToken } = require('../Middlewares/VerifyToken')
+
 
 const createJob = async (req, res, next) => {
     try {
@@ -52,14 +54,22 @@ const getJobDetails = async (req ,res, next)=>{
 
     try {
         const { jobId } = req.params
-
+        const userId = decodeToken(req.headers["authorization"]);
         const JobDetails = await Job.findById(jobId)
         if(!JobDetails){
             return res.status(400).json({
                 errormessage: 'Bad request'
             })
+            
         }
-        res.json({data:JobDetails})
+        let isEditable
+        if(userId){
+            const formatedUserId = userId.toString()
+            if(JobDetails.refUserId===formatedUserId){
+                isEditable= true
+            }
+        }
+        res.json({data:JobDetails, isEditable})
         
     } catch (error) {
        next(error) 
