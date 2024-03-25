@@ -58,15 +58,15 @@ const userLogin = async (req, res, next) => {
 
         }
         const token = jwt.sign(
-            {userId:UserDetails._id , name: UserDetails.name},
+            {userId:UserDetails?._id , name: UserDetails?.name},
             process.env.SECRET_CODE,
-            {expiresIn:'60m'}
+            {expiresIn:'24h'}
             )
         res.json(
             { message: 'User Login SuccessFully',
               token,
-              name:UserDetails.name  ,
-              userId:UserDetails._id
+              name:UserDetails?.name  ,
+              userId:UserDetails?._id
             }
             )
 

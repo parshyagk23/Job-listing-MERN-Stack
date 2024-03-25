@@ -26,7 +26,7 @@ const createJob = async (req, res, next) => {
                 errormessage: 'Bad request'
             })
         }
-        const userId = req.userId
+        const userId = req?.userId
         
         const JobDetails = new Job({
             CompanyName,
@@ -141,8 +141,8 @@ const updateJob = async (req, res, next) => {
 const getAllJobs = async (req ,res, next)=>{
 
     try {
-        const  JobPosition= req.query.title || "";
-        const  Skills= req.query.skills || "";
+        const  JobPosition= req.query?.title || "";
+        const  Skills= req.query?.skills || "";
         let filteredSkills;
         let filter ={}
         if(Skills){
