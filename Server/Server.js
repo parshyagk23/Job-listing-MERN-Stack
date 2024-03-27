@@ -5,6 +5,7 @@ const cors = require('cors')
 
 const authRoute = require("./Routes/auth");
 const JobRoute = require("./Routes/Job");
+const AppiedJobRoute = require("./Routes/AppliedJob")
 const app = express();
 
 app.use(express.json());
@@ -26,9 +27,9 @@ app.get("/api/health", (req, res) => {
 
 app.use("/api/v1/auth", authRoute);
 app.use("/api/v1/job", JobRoute);
+app.use("/api/v1/applied", AppiedJobRoute);
 
 app.use('*',(req,res)=>{
-    
     res.status(404).json({errormessage:'Route not found!'})
 })
 app.use((error,req,res,next )=>{

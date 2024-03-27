@@ -63,13 +63,15 @@ const getJobDetails = async (req ,res, next)=>{
             
         }
         let isEditable
+        let isJobPost= true
         if(userId){
             const formatedUserId = userId.toString()
             if(JobDetails.refUserId===formatedUserId){
                 isEditable= true
+                isJobPost =false
             }
         }
-        res.json({data:JobDetails, isEditable})
+        res.json({data:JobDetails, isEditable, isJobPost})
         
     } catch (error) {
        next(error) 
@@ -165,4 +167,22 @@ const getAllJobs = async (req ,res, next)=>{
     }
 }
 
-module.exports = {createJob , getJobDetails, updateJob,getAllJobs}
+const getJobPostByrefUserid = async (req,res,next) =>{
+    
+    try {
+        const {refuserid} = req.params
+        const JobDetailsRefUserId = await Job.find({refUserId:refuserid})
+        if(!JobDetailsRefUserId) {
+            return res.status(400).json({
+                errormessage: 'Bad request'
+            })
+        }
+        res.json({data:JobDetailsRefUserId})
+        
+    } catch (error) {
+        next(error)
+        
+    }
+}
+
+module.exports = {createJob , getJobDetails, updateJob,getAllJobs , getJobPostByrefUserid}

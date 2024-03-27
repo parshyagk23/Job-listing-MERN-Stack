@@ -20,6 +20,10 @@ const userSchema = new mongoose.Schema(
         mobile:{
             type:String,
             required:true
+        },
+        usertype:{
+            type:String,
+            required:true
         }
     },
     {timestamps:{createdAt:'createdAt' , updatedAt:'UpdatedAt'}}

@@ -4,8 +4,8 @@ const jwt = require('jsonwebtoken')
 
 const registerUser = async (req, res, next) => {
     try {
-        const { name, email, password, mobile } = req.body
-        if (!name || !email || !password || !mobile) {
+        const { name, email, password, mobile,usertype } = req.body
+        if (!name || !email || !password || !mobile || !usertype) {
             return res.status(400).json({
                 errormessage: 'Bad request'
             })
@@ -23,7 +23,8 @@ const registerUser = async (req, res, next) => {
             name,
             email,
             password: hashedpassword,
-            mobile
+            mobile,
+            usertype
         })
         await userData.save()
         res.json({ message: "User register successfully" })
@@ -66,7 +67,8 @@ const userLogin = async (req, res, next) => {
             { message: 'User Login SuccessFully',
               token,
               name:UserDetails?.name  ,
-              userId:UserDetails?._id
+              userId:UserDetails?._id,
+              usertype: UserDetails.usertype,
             }
             )
 

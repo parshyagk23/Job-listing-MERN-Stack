@@ -7,5 +7,6 @@ router.post('/create',verifyToken, JobController?.createJob )
 router.get('/job-details/:jobId', JobController?.getJobDetails )
 router.put('/update/:jobId',verifyToken, JobController?.updateJob )
 router.get('/all', JobController?.getAllJobs )
+router.get('/jobrefuser/:refuserid',verifyToken, JobController?.getJobPostByrefUserid )
 
 module.exports = router
