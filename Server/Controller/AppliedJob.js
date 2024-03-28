@@ -35,6 +35,7 @@ const PostAppliedJob =async (req,res,next) =>{
 
     } catch (error) {
         next(error)
+        
     }
 }
 const getAppliedJobsByUserid= async (req,res)=>{
@@ -52,7 +53,7 @@ const getAppliedJobsByUserid= async (req,res)=>{
 
             res.json({ data: getAppliedjobs})    
         } catch (error) {
-            console.log(error)
+            next(error)
         }
 }
 

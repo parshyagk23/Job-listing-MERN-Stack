@@ -10,8 +10,6 @@ const verifyToken = (req, res ,next) =>{
         req.userId = decode?.userId
         next()
     } catch (error) {
-        
-     
         res.status(401).json({  errormessage:'invalid token',
                                 isTokenExpired:true
                 })
