@@ -11,17 +11,17 @@ const PostAppliedJob =async (req,res,next) =>{
                 errormessage: 'Bad request'
             })
         }
-        const isJobApplied  = await AppiedJob.findOne({userId:userId})
-        const existedJobId = isJobApplied?.jobId
-        const existeduserId = isJobApplied?.userId
-
-   
+        const isJobApplied  = await AppiedJob.find({userId:userId})
+       
         if(isJobApplied){
-            if(existedJobId===jobId && existeduserId ===userId ){
-                return res
-                .status(409)
-                .json({ errormessage: 'Job already Applied' })
-            }
+            isJobApplied.map((job)=>{
+
+                if(job?.jobId===jobId && job?.userId === userId ){
+                    return res
+                    .status(409)
+                    .json({ errormessage: 'Job already Applied' })
+                }
+            })
         }
             const PostAppiedJob= new AppiedJob({
                 jobId,
